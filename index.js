@@ -2,9 +2,9 @@ const express = require('express');
 const app = express();
 const ErrorHandler = require('./apps/crawler/domain/errorHandler');
 
-//require("./apps/crawler/data-access/redis")();
 require("./apps/crawler/entry-points/routes/crawler")(app);
 require("./apps/crawler/entry-points/api/crawler");
+require("./apps/crawler/data-access/redis");
 
 const errorHandler = new ErrorHandler();
 
