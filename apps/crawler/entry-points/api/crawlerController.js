@@ -1,31 +1,32 @@
 const {CrawlerService} = require("../../domain/crawlerService");
-const {validateRequest} = require("../../domain/validation");
 
 async function crawl(req, res, next) {
     try {
-        validateRequest(req.body);
-        const crawlId = generateCrawlId();
         const crawler = new CrawlerService();
-        
-        crawler.crawl(crawlId, req)
-        .then((status) => console.log(`Finish crawling. stop reason ${status}`));
+        const crawlId = crawler.generateCrawlId();
 
+        await crawler.validateAndInit(crawlId, req.body);
         res.status(200).send(crawlId);
+
+        const status = await crawler.crawlUrls(crawlId, req.body);
+        console.log(`Finish crawling. ${status}`);
+
     } catch (error) {
         next(error);
     }    
 }
 
-function generateCrawlId() {
-        const charPool = "ABCDEFHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        const ID_LENGTH = 8;
-        let res = '';
+async function checkStatus(req,res,next) {
+    try {
+        //await validateCrawlId(req.params.id); //id with 8 digit length
+        const crawler = new CrawlerService();
+        const status = await crawler.getCrawlStatus(req.params.id);
 
-        for (let i = 0; i < ID_LENGTH; i++) {
-            res += charPool.charAt(Math.floor(Math.random() * charPool.length));
-        }
-
-        return res;
+        res.status(200).send(status);
+        
+    } catch (error) {
+        next(error);    
+    }
 }
-
 module.exports.crawl = crawl;
+module.exports.checkStatus = checkStatus;

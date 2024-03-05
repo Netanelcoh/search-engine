@@ -13,6 +13,15 @@ function validateRequest(request) {
     if(error) throw new ValidationError(error.details[0].message);
 }
 
+function validateCrawlId(crawlId) {
+    const schema = Joi.object({
+        id: Joi.string().length(8).required()
+    });
+
+    const {error} = schema.validate({id: crawlId});
+    if(error) throw new ValidationError(error.details[0].message);
+}
+
 function validateCrawlerRecord(record) {
     const schema = Joi.object({
         crawlId: Joi.string().length(8).required(),
@@ -34,4 +43,5 @@ class ValidationError extends Error {
   }
 
 module.exports.validateRequest = validateRequest;
+module.exports.validateCrawlId = validateCrawlId;
 module.exports.ValidationError = ValidationError
