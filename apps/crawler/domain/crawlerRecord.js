@@ -1,5 +1,6 @@
 class CrawlerRecord {
     crawlId
+    startTime
     baseUrl
     url
     distance
@@ -56,11 +57,6 @@ class CrawlerRecord {
    
    setUrl(url) {
      this.url = url;
-     return this; 
-   }
-   
-   setDistance(distance) {
-     this.distance = distance;
      return this; 
    }
    

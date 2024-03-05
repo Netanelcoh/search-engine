@@ -7,9 +7,8 @@ class ErrorHandler {
   
     async handleError(error, res) {
       console.error('Error:', error);
-      console.log(typeof error);
-    
-      if(res) {
+
+      if(!res._closed) {
         if(error instanceof httpError || error instanceof ValidationError) {
             res.status(400).json({
                 error: 'Bad Request',
@@ -22,7 +21,6 @@ class ErrorHandler {
             message: 'Something went wrong on our end.',
           });
       }
-      console.error(error);
     }
 }
 

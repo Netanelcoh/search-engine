@@ -2,16 +2,14 @@ class CrawlStatus {
     distance
     startTime
     stopReason
-    lastModified
-    numPages
+    visitedPages
 
-    Of(distance, startTime, stopReason, lastModified, numPages) {
+    static of(distance, startTime, stopReason, visitedPages) {
       const crawlStatus = new CrawlStatus();
       crawlStatus.distance = distance;
       crawlStatus.startTime = startTime;
       crawlStatus.stopReason = stopReason;
-      crawlStatus.lastModified = lastModified;
-      crawlStatus.numPages = numPages;
+      crawlStatus.visitedPages = visitedPages;
 
       return crawlStatus;
     }
@@ -28,12 +26,8 @@ class CrawlStatus {
         myObject.stopReason = value;
       }
       
-    setLastModified(value) {
-        myObject.lastModified = value;
-      }
-      
-    setNumPages(value) {
-        myObject.numPages = value;
+    setVisitedPages(value) {
+        myObject.visitedPages = value;
       }
 
 }
